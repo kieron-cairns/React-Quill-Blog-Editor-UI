@@ -37,7 +37,7 @@ function MyComponent() {
     // Loop over each pre tag to insert a code tag with user-specified language
     for (let i = 0; i < preTagCount; i++) {
       let language = prompt('Enter a language for the code block'); // Prompt the user to enter a language
-      wrappedHtml = wrappedHtml.replace('<pre>', `<pre><code class="language-${language}">`).replace('</pre>', '</code></pre>'); // Insert the code tag with the specified language
+      wrappedHtml = wrappedHtml.replace('<pre>', `<pre><code class="language-${language}">{\``).replace('</pre>', `\`}</code></pre>`); // Insert the code tag with the specified language and special characters
     }
 
     console.log(wrappedHtml); // Log the modified HTML
