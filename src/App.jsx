@@ -27,7 +27,8 @@ function MyComponent() {
       let quill = quillRef.current.getEditor();
       let delta = quill.getContents();
       let html = quill.root.innerHTML; // Get HTML
-      console.log(html); // Log HTML for now, handle it as per your needs
+      let wrappedHtml = html.replace(/<pre class="ql-syntax"/g, '<div class="code-block"><pre').replace(/<\/pre>/g, '</pre></div>').replace(/spellcheck="false"/g, '').replace(/<pre >/g, '<pre>'); // Wrap pre tag with div, remove class and spellcheck from pre tag, and remove extra space
+      console.log(wrappedHtml); // Log wrapped HTML
     }
   };
 
@@ -41,6 +42,9 @@ function MyComponent() {
         modules={modules} 
       />
       <button onClick={handleExport}>Export as HTML</button> {/* Add export button */}
+
+     
+
     </div>
   );
 }
