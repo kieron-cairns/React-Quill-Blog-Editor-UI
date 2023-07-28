@@ -21,16 +21,28 @@ function MyComponent() {
     }
   }, []);
 
-  // Function to handle the export to HTML
-  const handleExport = () => {
-    if (quillRef != null && quillRef.current != null) {
-      let quill = quillRef.current.getEditor();
-      let delta = quill.getContents();
-      let html = quill.root.innerHTML; // Get HTML
-      let wrappedHtml = html.replace(/<pre class="ql-syntax"/g, '<div class="code-block"><pre').replace(/<\/pre>/g, '</pre></div>').replace(/spellcheck="false"/g, '').replace(/<pre >/g, '<pre>'); // Wrap pre tag with div, remove class and spellcheck from pre tag, and remove extra space
-      console.log(wrappedHtml); // Log wrapped HTML
+ // Function to handle the export to HTML
+ const handleExport = () => {
+  if (quillRef != null && quillRef.current != null) {
+    let quill = quillRef.current.getEditor();
+    let delta = quill.getContents();
+    let html = quill.root.innerHTML; // Get HTML
+    
+    // Process the HTML to wrap pre tags and add code tags
+    let wrappedHtml = html.replace(/<pre class="ql-syntax"/g, '<div class="code-block"><pre').replace(/<\/pre>/g, '</pre></div>').replace(/spellcheck="false"/g, '').replace(/<pre >/g, '<pre>');
+    
+    // Count the number of pre tags
+    let preTagCount = (wrappedHtml.match(/<pre>/g) || []).length;
+
+    // Loop over each pre tag to insert a code tag with user-specified language
+    for (let i = 0; i < preTagCount; i++) {
+      let language = prompt('Enter a language for the code block'); // Prompt the user to enter a language
+      wrappedHtml = wrappedHtml.replace('<pre>', `<pre><code class="language-${language}">`).replace('</pre>', '</code></pre>'); // Insert the code tag with the specified language
     }
-  };
+
+    console.log(wrappedHtml); // Log the modified HTML
+  }
+};
 
   return (
     <div>
