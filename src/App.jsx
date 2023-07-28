@@ -21,14 +21,27 @@ function MyComponent() {
     }
   }, []);
 
+  // Function to handle the export to HTML
+  const handleExport = () => {
+    if (quillRef != null && quillRef.current != null) {
+      let quill = quillRef.current.getEditor();
+      let delta = quill.getContents();
+      let html = quill.root.innerHTML; // Get HTML
+      console.log(html); // Log HTML for now, handle it as per your needs
+    }
+  };
+
   return (
-    <ReactQuill 
-      ref={quillRef} 
-      theme="snow" 
-      value={value} 
-      onChange={setValue} 
-      modules={modules} 
-    />
+    <div>
+      <ReactQuill 
+        ref={quillRef} 
+        theme="snow" 
+        value={value} 
+        onChange={setValue} 
+        modules={modules} 
+      />
+      <button onClick={handleExport}>Export as HTML</button> {/* Add export button */}
+    </div>
   );
 }
 
@@ -36,7 +49,7 @@ function MyComponent() {
 const modules = {
   toolbar: [
     [{ 'header': [1, 2, false] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
     [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
     ['link', 'image'],
     ['clean']
