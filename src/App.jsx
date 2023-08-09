@@ -68,6 +68,9 @@ const handleSelectPost = (index) => {
     // Process the HTML to wrap pre tags and add code tags
     let wrappedHtml = html.replace(/<pre class="ql-syntax"/g, '<div class="code-block"><pre').replace(/<\/pre>/g, '</pre></div>').replace(/spellcheck="false"/g, '').replace(/<pre >/g, '<pre>');
     
+    // Remove all instances of &nbsp;
+    wrappedHtml = wrappedHtml.replace(/&nbsp;/g, ' ');
+    
     // Count the number of pre tags
     let preTagCount = (wrappedHtml.match(/<pre>/g) || []).length;
 
@@ -80,6 +83,7 @@ const handleSelectPost = (index) => {
     console.log(wrappedHtml); // Log the modified HTML
   }
 };
+
 
   return (
     <div>
@@ -103,7 +107,7 @@ const handleSelectPost = (index) => {
 // Specify the toolbar options
 const modules = {
   toolbar: [
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+    [{ 'header': 1 }, { 'header': 2 }, { 'header': 3 }],               // custom button values
     ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
     [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
     ['link', 'image', 'video'],
